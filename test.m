@@ -1,12 +1,12 @@
-Minimize order of a lowpass FIR filter (magnitude design)
-Jump to:     Source code     Text output      Plots     Library index
+% Minimize order of a lowpass FIR filter (magnitude design)
+% Jump to:     Source code     Text output      Plots     Library index
 % "FIR Filter Design via Spectral Factorization and Convex Optimization"
 % by S.-P. Wu, S. Boyd, and L. Vandenberghe
 % (figures are generated)
 %
 % Designs an FIR lowpass filter using spectral factorization method where we:
 % - minimize the filter order
-% - have a constraint on the maximum passband ripple
+% % % % % % % % % % - have a constraint on the maximum passband ripple
 % - have a constraint on the maximum stopband attenuation
 %
 %   minimize   filter order n
