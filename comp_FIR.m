@@ -1,7 +1,7 @@
 % FIR filter design
 clc
 close all
-clear all
+coucou
 
 % Sample the frequency vector
 w1 = 0:4.06e-4:0.008;
