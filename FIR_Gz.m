@@ -3,13 +3,8 @@ clc
 close all
 clear all
 
-% Sample the frequency vector
-w1 = 0:4.06e-4:0.008;
-w2 = 0.008:4.06e-4:0.04; w2(end) = 0.0399;
-w3 = 0.04:8.12e-4:0.1;
-w4 = 0.1:8.12e-4:0.83;
 
-n = 512;
+dsfdsfsd
 
 A1 = [ones(length(w1),1) cos(kron(w1'.*(2*pi),[1:n-1]))];
 A2 = [ones(length(w2),1) cos(kron(w2'.*(2*pi),[1:n-1]))];
