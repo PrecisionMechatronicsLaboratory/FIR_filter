@@ -1,5 +1,3 @@
-Minimize order of a lowpass FIR filter (magnitude design)
-Jump to:     Source code     Text output      Plots     Library index
 % "FIR Filter Design via Spectral Factorization and Convex Optimization"
 % by S.-P. Wu, S. Boyd, and L. Vandenberghe
 % (figures are generated)
@@ -29,9 +27,7 @@ Jump to:     Source code     Text output      Plots     Library index
 %
 % Written for CVX by Almir Mutapcic 02/02/06
 
-%*********************************************************************
-% user's filter specs (for a low-pass filter example)
-%*********************************************************************
+%% user's filter specs (for a low-pass filter example)
 % filter order that is used to start the bisection (has to be feasible)
 max_order = 20;
 
@@ -40,16 +36,11 @@ wstop = 0.24*pi;        % stopband start freq (in radians)
 delta = 1;              % max (+/-) passband ripple in dB
 atten = -30;      % stopband attenuation level in dB
 
-%********************************************************************
-% create optimization parameters
-%********************************************************************
+%% create optimization parameters
 m = 15*(max_order);   % freq samples (rule-of-thumb)
 w = linspace(0,pi,m);
 
-%*********************************************************************
-% use bisection algorithm to solve the problem
-%*********************************************************************
-
+%% use bisection algorithm to solve the problem
 n_bot = 1;
 n_top = max_order;
 n_best = Inf;
@@ -61,7 +52,7 @@ while( n_top - n_bot > 1)
     % create optimization matrices
     % A is the matrix used to compute the power spectrum
     % A(w,:) = [1 2*cos(w) 2*cos(2*w) ... 2*cos(n*w)]
-    A = [ones(m,1) 2*cos(kron(w',[1:n_cur-1]))];
+    A = [ones(m,1) 2*cos(kron(w',1:n_cur-1))];
 
     % passband 0 <= w <= w_pass
     ind = find((0 <= w) & (w <= wpass));    % passband
@@ -92,10 +83,10 @@ while( n_top - n_bot > 1)
     cvx_end
 
     % bisection
-    if isnan( cvx_optval ),
+    if isnan( cvx_optval )
         fprintf( 1, 'Solver failed for n = %d taps, assuming infeasible\n', n_cur );
         n_bot = n_cur;
-    elseif cvx_optval <= 10^(atten/10), % strfind(cvx_status,'Solved') % feasible
+    elseif cvx_optval <= 10^(atten/10) % feasible
         fprintf(1,'Problem is feasible for n = %d taps\n',n_cur);
         n_top = n_cur;
         if n_best > n_cur, r = r_cur; end
@@ -110,17 +101,15 @@ n = length(r);
 fprintf(1,'\nOptimum number of filter taps for given specs is %d.\n',n);
 
 
-%********************************************************************
-% plots
-%********************************************************************
+%% plots
 figure(1)
 % FIR impulse response
-plot([0:n-1],h','o',[0:n-1],h','b:')
+plot(0:n-1, h', 'o', 0:n-1, h', 'b:')
 xlabel('t'), ylabel('h(t)')
 
 figure(2)
 % frequency response
-H = exp(-j*kron(w',[0:n-1]))*h;
+H = exp(-1i*kron(w', 0:n-1))*h;
 % magnitude
 subplot(2,1,1)
 plot(w,20*log10(abs(H)),...
@@ -134,10 +123,4 @@ subplot(2,1,2)
 plot(w,angle(H))
 axis([0,pi,-pi,pi])
 xlabel('w'), ylabel('phase H(w)')
-Problem not feasible for n = 11 taps
-Problem not feasible for n = 16 taps
-Problem is feasible for n = 18 taps
-Problem is feasible for n = 17 taps
 
-Optimum number of filter taps for given specs is 17.
- 
